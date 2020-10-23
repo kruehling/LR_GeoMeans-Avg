@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1603476864274.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E7C480AB",
+    "lastKnownWriteTime" : 1603343132,
+    "last_content_update" : 1603343132,
+    "path" : "~/Dropbox/Thesis research/Laramie River/2020 Summer/Various R code/Master_spredsheet copy.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "32,47",
+        "scrollLine" : "23"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,116 @@
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(readr)
+library(magrittr)
+install.packages("tbrf")
+install.packages("dbplyr")
+library(tbrf)
+library(dbplyr)
+library(stats)
+install.packages("car")
+Yeslibrary(car)
+setwd("~/Dropbox/WRP_Ecoli/Data")
+
+#load master and reformate date and time
+master<-read.csv("Master_datasheet.csv")
+print(master)
+str(master)
+master<- master %>% mutate(date = as.POSIXct(date, format = "%m/%d/%y", tz = "UTC"))
+
+#Create new column with avg of replicates
+ENU<- master %>% 
+  filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>% 
+  group_by(parameter,date, site) %>% mutate(Rep_avg = mean(value))
+
+#New df without substrate and one value per Enumeration test 
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>% 
+  filter(replicate == 1) %>% 
+  arrange(site, date)
+
+write.csv(ENU_avg, 'EnumerationAvgs.csv')
+Geo<-tbr_gmean(ENU_avg, x= Rep_avg, tcolumn =  date, unit = "weeks", n=6)
+
+
+
+
+#trying to average reps
+#ENU_rep<-ENU  %>%  spread(key = "replicate",value= "value") %>% group_by(site, date) %>% 
+  #rename(ENU_rep$1 = rep1)
+
+
+
+#graphics
+library(ggplot2)
+setwd("~/Dropbox/WRP_Ecoli/Data/Laramie River/Raw Data")
+means<- read.csv("GeoMeansEnumerations.csv")
+
+#get different columns for each parameter
+meansWide<- means %>% spread(key = "Parameter",value= "Value")
+meansWideSelect<- meansWide %>% filter(Site != "WC2", Site != "LR1")
+
+
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = Site)) +
+  geom_line(aes(y= EcIDEXX, color= Site, linetype= "EcIDEXX")) +
+  labs(title = "Geometric means for IDEXX and 1603 \nE. coli Enumeration Laramie River", 
+       y="CFU/100ml", x="Rolling Geometric Means") +
+  theme_minimal(base_size = 19)
+  
+  
+  guides(name= "Parameter", labels= c("Ec1603", "EcIDEXX"))
+  
+  
+## testing variance between geomeans of two methods
+  
+geomod<- aov(Value ~ Parameter, data= means)
+summary(geomod)
+
+
+#test the residuals 
+geores<- residuals(geomod)
+hist(geores)
+shapiro.test(geores) # this P < .5 residual error may not follow normal distribution 
+
+
+leveneTest(means$Value ~ means$Parameter) #significant homogenaity of variance 
+bartlett.test(means$Value ~ means$Parameter)
+
+TukeyHSD(geomod, "Parameter")
+
+
+#concern about residual error - going to try a non-parametric comparison 
+wilcox.test(means$Value ~ means$Parameter)
+
+
+
+#log transform the data to see if we can increase residual error (did not work)
+geomod_log<- aov(log(Value)~ Parameter, data= means)
+summary(geomod_log)
+geores_log<- residuals(geomod_log)
+
+hist(geores_log)
+shapiro.test(geores_log)
+
+
+#variance between the avg values 
+
+avgENUmod<- aov(Rep_avg ~ parameter, data= ENU_avg)
+summary(avgENUmod)
+
+
+#test the residuals 
+ENUres<- residuals(avgENUmod)
+hist(ENUres) 
+#some outliers in this histogram 
+
+#testing residuals
+shapiro.test(ENUres) # this P < .5 residual error may not follow normal distribution 
+bartlett.test(ENU_avg$Rep_avg ~ ENU_avg$parameter) # also <.5 
+
+TukeyHSD(avgENUmod, "parameter")
+
+
+
+#non-parametric 
+wilcox.test(ENU_avg$Rep_avg ~ ENU_avg$parameter)

@@ -1,0 +1,43 @@
+##---- DataCamp Tidyverse intro course
+install.packages("gapminder")
+library("gapminder")
+install.packages("dplyr")
+library(dplyr)
+
+##---filter() verb 
+#pipe %>%
+#filtering for one year of data, does not alter origninal dataset just generates new one
+#gapmind%>% filter(year == 2007)
+
+#-------arrange () sorting verb
+#gapminder %>% arrange(gdpPercap)    assending order
+#gapminder %>% arrange(desc(gdpPercap))   desending order
+#can be combined with filter 
+
+#------mutate
+#gapminder%>% mutate (gdp= gdpPercap* pop)    gdp is new column
+
+##----- ggplot scatter plots
+#ggplot(gapminder, aes(x= x axis, y= y axis, color= categorical parameter, size= numeric veriable))+ 
+#geom_point()
+
+#x on log 10 
+#  +scale_x_log10() 
+# +expand_limit (y=0)
+
+#facet (get seperate panels)
+#  +facet_wrap(~ parameter)
+
+##-------summarize verb
+#summarize(meanlife= mean(life), maxaAge= max(age))
+
+##----group_by
+#group_by(continent,years, year==2007
+
+##-------Intro to qualitative veriables 
+#  is.factor() or is.character() to determine type of variable 
+
+#mutate_if(is.character, as.factor)
+
+
+

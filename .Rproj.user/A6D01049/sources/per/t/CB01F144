@@ -1,0 +1,32 @@
+{
+    "id": "CB01F144",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1603335453566.0,
+    "source_on_save": false,
+    "relative_order": 8,
+    "properties": {
+        "expression": "wdNoFB",
+        "caption": "wdNoFB",
+        "totalObservations": "216",
+        "displayedObservations": "216",
+        "variables": "20",
+        "cacheKey": "7A560ECA",
+        "object": "wdNoFB",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=wdNoFB&cache_key=7A560ECA&max_cols=50",
+        "preview": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 4616900342370952806,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1603335453566,
+    "read_only": false,
+    "read_only_alternatives": []
+}

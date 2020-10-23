@@ -1,0 +1,32 @@
+{
+    "id": "5FA6A9D1",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1603335751317.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "expression": "ENU_avgWD",
+        "caption": "ENU_avgWD",
+        "totalObservations": 64,
+        "displayedObservations": 64,
+        "variables": 5,
+        "cacheKey": "290729B6",
+        "object": "ENU_avgWD",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=ENU_avgWD&cache_key=290729B6&max_cols=50",
+        "preview": 0
+    },
+    "folds": "",
+    "lastKnownWriteTime": 4411808102,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1603335751317,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,77 @@
+setwd("~/Dropbox/WRP_Ecoli/Data")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("tidyverse")
+install.packages("readr")
+install.packages("magrittr")
+
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(readr)
+library(magrittr)
+
+
+master<-read.csv("Master_datasheet.csv")
+print(master)
+str(master)
+
+#make master sheet horizontal 
+masterWide<-master %>% spread(key = "parameter",value= "value")
+str(masterWide)
+wdNoFB<- masterWide %>% filter(site != "LR-BlankDI", site != "LR-FB")
+
+#log scale scatter of enumeration methods including all reps
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+  scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+  theme_minimal(base_size = 19)+ 
+  labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020", 
+       y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+
+#filtering and spreading data for plot
+ENU_avgWD<- ENU_avg %>% spread(key = "parameter",value= "Rep_avg")%>% 
+  filter(site != "LR-BlankDI", site != "LR-FB")
+
+# scatter plot of enumeration with reps averaged
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+  scale_x_log10()+ scale_y_log10()+
+  theme_minimal(base_size = 19)+ 
+  labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020", 
+       y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+
+#scatter plot not on log scale 
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+  theme_minimal(base_size = 19)+ 
+  labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020", 
+       y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+
+
+#line plots of avg over the course of summer 
+#1603
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+
+  geom_line(aes( color = site)) +
+  labs(title = "1603 Enumeration Averages", 
+       y="MPN or CFU/100ml") +
+  theme_minimal(base_size = 19)
+
+#IDEXX
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+  geom_line(aes( color = site)) +
+  labs(title = "IDEXX Enumeration Averages", 
+       y="MPN/100ml") +
+  theme_minimal(base_size = 19)+
+  scale_linetype_manual(values = "dashed")
+
+
+# create a lm to predict IDEXX based on 1603
+lmENU<- lm(EcIDEXX ~ Ec1603, data= ENU_avgWD)
+summary(lmENU) #high residual error
+
+log_lmENU<- lm((log1p(EcIDEXX) ~ log1p(Ec1603)), data= ENU_avgWD)
+summary(log_lmENU)
+
+
+
+
+#scatter plot of 1603 enumeration vs turbidity 
+ggplot(masterWide, aes(x=Ec1603, y= Turbidity))+geom_point()+scale_y_log10()

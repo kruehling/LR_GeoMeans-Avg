@@ -1,0 +1,85 @@
+#setwd("~/Desktop")
+#sed<-read.csv("sed and water enumeration.csv", header=T)
+#class(sed$site)
+#sed$value<-as.numeric(sed$value)
+#sed$site<-as.numeric(sed$site)
+
+#plot(sed$site, sed$value, )
+# sed <- sed[order(sed$sitenum),]
+# sed$site
+
+setwd("~/Dropbox/Thesis research/Laramie River/2020 Summer")
+
+#-----------------------comparison of water and sediment 1603 results by site------------------------
+
+sed<-read.csv("sed and water enumeration.csv", header=T)
+sed$site<- as.factor(sed$site)
+sed$sitenum<-as.numeric(sed$site)
+
+sed$value<-as.numeric(sed$value)
+
+sed$color<-ifelse(sed$matrix=="sediment", sed$color<-rgb(160/255,82/255,45/255,.3), sed$color<-rgb(0,0,1,.2))
+
+plot(jitter(sed$sitenum), sed$value, xaxt = "n", xlab="Laramie River site", ylab="CFU/100ml", main = "Sediment and Water Enumeration results", pch= 19, col=sed$color)
+axis(1, labels=c("FB", "LL1", "LL2", "LR1", "LR2", "LR3", "LR4", "WC2"), at=c(1:8))
+
+
+
+####----------------------Different disassociation treatment comparison---------------------------------
+treat<- read.csv("Sediment treatments .csv")
+treat$site<- as.factor(treat$site)
+treat$sitenum<-as.numeric(treat$site)
+
+treat$value<-as.numeric(treat$value)
+treat$Treatment<- as.factor(treat$Treatment)
+
+plot(jitter(treat$sitenum), jitter(treat$value), xaxt = "n", xlab="Laramie River site", ylab="CFU/100ml", 
+     main = "E. coli disassociation treatments", col= treat$Treatment, bty='L')
+axis(1, labels=c("LL1", "LL2", "LR1", "LR3", "LR4"), at=c(1:5))
+legend("topleft", c("A","B","C","D","E","F","G"), col=c(treat$Treatment), xpd=TRUE,bty = "n",horiz = TRUE)# c("A","B","C","D","E","F","G"))
+
+##-------------------------------------Attempts to coordinate color to treatment-----------
+#treat$treatnum<-as.numeric(treat$Treatment)
+#treat$color<- treat$treatnum(1:7)
+#if(treat$Treatment=="A") {treat$color<-"a6cee3"}
+#if(treat$Treatment=="B") {treat$color<-"1f78b4"}
+#if(treat$Treatment=="C") {treat$color<-rgb(178/255,223/255,138/255)}
+#if(treat$Treatment=="D") {treat$color<-rgb(51/255,160/255,44/255,.3)}
+#treat$color<-ifelse(treat$Treatment=="E", treat$color<-rgb(251/255,154/255,153/255,.3))
+#treat$color<-ifelse(treat$Treatment=="F", treat$color<-rgb(227/255,26/255,28/255,.3))
+#treat$color<-ifelse(treat$Treatment=="G", treat$color<-rgb(253/255,191/255,111/255,.3))
+
+##--------------Supernatant and water regression--------
+sup<- read.csv("water and supernatant avg.csv")
+plot(sup$avg.S~sup$avg.W, xlab=" CFU/100mL in Water", ylab="CFU/100mL in Supernatant", main="Water and supernatant colony counts", col=sup$site)
+legend("topleft", c("LL2", "LR4", "LR3"), pch=1, col=c("black","chartreuse3","firebrick2"))
+mod<-lm(sup$avg.S~sup$avg.W)
+summary(mod)
+abline(mod)
+
+##--------------IDEXX and turb------------------
+
+turb<- read.csv("turb IDEXX TSS.csv")
+plot(turb$E..coli.IDEXX~turb$Turbidity, ylab= "E. coli (MPN/100mL)", xlab= "Turbidity (NTU)", main= "E. coli turbidity regression")
+mod2<-lm(turb$E..coli.IDEXX~turb$Turbidity)
+summary(mod2)
+abline(mod2)
+
+
+##-------------IDEXX and TSS---------
+plot(turb$E..coli.IDEXX~turb$TSS, ylab="E. coli (MPN/100mL)", xlab= "TSS (mg/L)", main="E. coli TSS regression")
+mod3<-lm(turb$E..coli.IDEXX~turb$TSS)
+summary(mod3)
+abline(mod3)
+
+
+##-------------E. coli methods comp-----------
+methods<- read.csv("E. coli methods comp.csv")
+plot(methods$avg.IDEXX~methods$avg.1603, ylab="IDEXX (MPN/100mL)", 
+     xlab="EPA 1603 (CFU/100mL)", main= "E.coli enumeration methods comparison")
+mod4<- lm(methods$avg.IDEXX~methods$avg.1603)
+summary(mod4)
+abline(mod4)
+
+
+

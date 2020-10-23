@@ -1,0 +1,32 @@
+{
+    "id": "5175FD14",
+    "path": null,
+    "project_path": null,
+    "type": "r_dataframe",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1603334865285.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "expression": "masterWide",
+        "caption": "masterWide",
+        "totalObservations": 246,
+        "displayedObservations": 246,
+        "variables": 20,
+        "cacheKey": "FF5A4370",
+        "object": "masterWide",
+        "environment": "",
+        "contentUrl": "grid_resource/gridviewer.html?env=&obj=masterWide&cache_key=FF5A4370&max_cols=50",
+        "preview": 0
+    },
+    "folds": "",
+    "lastKnownWriteTime": 0,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1603334865285,
+    "read_only": false,
+    "read_only_alternatives": []
+}

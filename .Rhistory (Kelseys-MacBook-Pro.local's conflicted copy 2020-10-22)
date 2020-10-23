@@ -1,0 +1,512 @@
+master<- master %>% mutate(date = as.POSIXct(date, format = "%m/%d/%y", tz = "UTC"))
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(readr)
+library(magrittr)
+library(tbrf)
+library(dbplyr)
+setwd("~/Dropbox/WRP_Ecoli/Data")
+master<-read.csv("Master_datasheet.csv")
+master<-read.csv("Master_datasheet.csv")
+master<- master %>% mutate(date = as.POSIXct(date, format = "%m/%d/%y", tz = "UTC"))
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX")
+#trying to average reps
+ENU_rep<-ENU %>%  spread(key = "replicate",value= "value") %>% group_by(site, date) %>%
+drop_na(1, 2, 3, 4) %>% mutate(Avg= mean(c(1,2,3,4)))
+ENU_rep<-ENU %>%  spread(key = "replicate",value= "value") %>% group_by(site, date) %>%
+rename(1= rep1)
+#trying to average reps
+ENU_rep<-ENU %>%  spread(key = "replicate",value= "value") %>% group_by(site, date) %>%
+rename(ENU_rep$1 = rep1)
+ENU_rep %>% rename(ENU_rep$1 = rep1)
+ENU_rep %>% rename(ENU_rep$1 = "rep1")
+ENU_rep %>% rename(1 = "rep1")
+%>% summarise(Rep_avg = mean(value))
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(site, date) %>% arrange(desc(replicate))%>%
+summarise(Rep_avg = mean(value))
+View(ENU)
+View(ENU)
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(parameter, site, date) %>%
+arrange(desc(replicate))%>% mutate(Rep_avg = mean(value))
+View(ENU)
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(parameter,date, site) %>%
+arrange(desc(replicate))%>% mutate(Rep_avg = mean(value))
+View(ENU)
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(parameter,date, site) %>% mutate(Rep_avg = mean(value))
+View(ENU)
+ENU_avg<- ENU %>% mutate(date, site, parameter, Rep_avg)
+View(ENU_avg)
+ENU_avg<- ENU %>% selet(date, site, parameter, Rep_avg)
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(parameter,date, site) %>% mutate(Rep_avg = mean(value))
+ENU_avg<- ENU %>% selet(date, site, parameter, Rep_avg)
+ENU_avg<- ENU %>% select(date, site, parameter, Rep_avg)
+View(ENU_avg)
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1)
+View(ENU_avg)
+tbr_gmean(ENU_avg, Rep_avg, date, unit = "weeks", n=6)
+tbr_gmean(ENU_avg, x= Rep_avg, tcolumn =  date, unit = "weeks", n=6)
+Geo<-tbr_gmean(ENU_avg, x= Rep_avg, tcolumn =  date, unit = "weeks", n=6)
+View(Geo)
+View(Geo)
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>% group_by(parameter, date, site)
+Geo<-tbr_gmean(ENU_avg, x= Rep_avg, tcolumn =  date, unit = "weeks", n=6)
+View(ENU_avg)
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>% group_by(parameter, site, date)
+View(ENU_avg)
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>% group_by(parameter, site) %>% arrange(desc(date))
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>% group_by(parameter, site)
+View(ENU_avg)
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>% group_by(site, parameter)
+View(ENU_avg)
+ENU_avg %>% group_by(site, parameter)
+ENU_avg %>% group_by(site)
+View(ENU_avg)
+#New df without substrate and one value per Enumeration test
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>% group_by(site)
+View(ENU_avg)
+#New df without substrate and one value per Enumeration test
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>%
+group_by(c("LR-LL2", "LR-LR1", "LR-LR2", "LR-LR3", "LR-LR4","LR-LL1", "LR-WC2"))
+View(ENU_avg)
+#New df without substrate and one value per Enumeration test
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>%
+arrange(site)
+View(ENU_avg)
+#New df without substrate and one value per Enumeration test
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>%
+arrange(site, date)
+Geo<-tbr_gmean(ENU_avg, x= Rep_avg, tcolumn =  date, unit = "weeks", n=6)
+View(Geo)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(readr)
+library(magrittr)
+install.packages("tbrf")
+install.packages("dbplyr")
+install.packages("dbplyr")
+library(tbrf)
+library(dbplyr)
+setwd("~/Dropbox/WRP_Ecoli/Data")
+#load master and reformate date and time
+master<-read.csv("Master_datasheet.csv")
+master<- master %>% mutate(date = as.POSIXct(date, format = "%m/%d/%y", tz = "UTC"))
+library(tidyverse)
+master<- master %>% mutate(date = as.POSIXct(date, format = "%m/%d/%y", tz = "UTC"))
+#Create new column with avg of replicates
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(parameter,date, site) %>% mutate(Rep_avg = mean(value))
+#New df without substrate and one value per Enumeration test
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>%
+arrange(site, date)
+read.csv(ENU_avg,EnumerationAvgs.csv)
+read.csv(ENU_avg, "EnumerationAvgs.csv")
+read.csv(ENU_avg, 'EnumerationAvgs.csv')
+write.csv(ENU_avg, 'EnumerationAvgs.csv')
+#plot dashed/solid lines for different parameters
+ggplot(meansWide, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal()+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(readr)
+library(magrittr)
+library(tbrf)
+library(dbplyr)
+library(stats)
+library(car)
+install.packages("car")
+yes
+library(car)
+install.packages("car")
+library(stats)
+#plot dashed/solid lines for different parameters
+ggplot(meansWide, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal()+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+#get different columns for each parameter
+meansWide<- means %>% spread(key = "Parameter",value= "Value")
+means<- read.csv("GeoMeansEnumerations.csv")
+setwd("~/Dropbox/WRP_Ecoli/Data/Laramie River/Raw Data")
+#graphics
+library(ggplot2)
+means<- read.csv("GeoMeansEnumerations.csv")
+#get different columns for each parameter
+meansWide<- means %>% spread(key = "Parameter",value= "Value")
+#plot dashed/solid lines for different parameters
+ggplot(meansWide, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal()+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+View(meansWide)
+meansWideSelect<- meansWide %>% filter(site != "WC2", site != "LR1")
+meansWideSelect<- meansWide %>% filter(Site != "WC2", Site != "LR1")
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal()+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+geomod<- aov(Value ~ Parameter, data= means)
+summary(geomod)
+#test the residuals
+geores<- residuals(geomod)
+hist(geores)
+shapiro.test(geores) # this P < .5 residual error may not follow normal distribution
+leveneTest(means$Value ~ means$Parameter) #significant homogenaity of variance
+bartlett.test(means$Value ~ means$Parameter)
+TukeyHSD(geomod, "Parameter")
+#concern about residual error - going to try a non-parametric comparison
+wilcox.test(means$Value ~ means$Parameter)
+#log transform the data to see if we can increase residual error (did not work)
+geomod_log<- aov(log(Value)~ Parameter, data= means)
+summary(geomod_log)
+geores_log<- residuals(geomod_log)
+hist(geores_log)
+shapiro.test(geores_log)
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal()+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal(axis.text= element_text(size = 12),
+axis.title=element_text(size = 14, face= "bold"))+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal(base_size = 22)+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal(base_size = 19)+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+theme_minimal(base_size = 19, plot.title = element_text(hjust= 0.5))+
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means")
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+labs(title = "Geometric means for IDEXX and 1603 E. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means") +
+theme_minimal(base_size = 19, plot.title = element_text(hjust= 0.5))
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "soild"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "dashed")) +
+labs(title = "Geometric means for IDEXX and 1603 \nE. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means") +
+theme_minimal(base_size = 19)
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= 1))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= 2)) +
+labs(title = "Geometric means for IDEXX and 1603 \nE. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means") +
+theme_minimal(base_size = 19)
+#plot dashed/solid lines for different parameters
+ggplot(meansWideSelect, aes(x= GM, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "EcIDEXX")) +
+labs(title = "Geometric means for IDEXX and 1603 \nE. coli Enumeration Laramie River",
+y="CFU/100ml", x="Rolling Geometric Means") +
+theme_minimal(base_size = 19)
+View(means)
+View(ENU_avg)
+#log scale scatter of enumeration methods
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_light()+
+ggtitle("E. coli Enumeration methods Laramie River Summer 2020")
+#make master sheet horizontal
+masterWide<-master %>% spread(key = "parameter",value= "value")
+str(masterWide)
+wdNoFB<- masterWide %>% filter(site != "LR-BlankDI", site != "LR-FB")
+#log scale scatter of enumeration methods
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_light()+
+ggtitle("E. coli Enumeration methods Laramie River Summer 2020")
+View(masterWide)
+View(master)
+#log scale scatter of enumeration methods
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+ggtitle("E. coli Enumeration methods Laramie River Summer 2020")
+#log scale scatter of enumeration methods
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+ggtitle("E. coli Enumeration methods \nLaramie River Summer 2020")
+#log scale scatter of enumeration methods
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX MPN/100ml")
+#log scale scatter of enumeration methods
+ggplot(wdNoFB, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+View(wdNoFB)
+View(ENU_avg)
+View(ENU)
+View(ENU_avg)
+View(ENU_rep)
+View(ENU_avg)
+ggplot(ENU_avg, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+View(ENU_avg)
+ENU_avgWD<- ENU_avg %>% spread(key = "parameter",value= "value")
+ENU_avgWD<- ENU_avg %>% spread(key = "Parameter",value= "Rep_avg")
+ENU_avgWD<- ENU_avg %>% spread(key = "parameter",value= "Rep_avg")
+View(ENU_avgWD)
+ENU_avgWD<- ENU_avg %>% spread(key = "parameter",value= "Rep_avg")%>%
+filter(site != "LR-BlankDI", site != "LR-FB")
+ggplot(ENU_avg, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+View(ENU_avgWD)
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ ylim(-5,200)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+View(wdNoFB)
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ expand_limits(x=0, y=0)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+scale_y_log10()+ expand_limits(x=-5, y=0)+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
++ scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)")+ ylim(-5,200)
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+# create a lm to predict IDEXX based on 1603
+lmENU<- lm(EcIDEXX ~ Ec1603, data= ENU_avgWD)
+summary(lmENU)
+log_lmENU<- lm((log1p(EcIDEXX) ~ log1p(Ec1603)), data= ENU_avgWD)
+summary(log_lmENU)
+View(ENU_avg)
+avgENUmod<- aov(Rep_avg ~ parameter, data= ENU_avg)
+summary(avgENUmod)
+#test the residuals
+ENUres<- residuals(avgENUmod)
+hist(ENUres)
+shapiro.test(geores) # this P < .5 residual error may not follow normal distribution
+leveneTest(means$Value ~ means$Parameter) #significant homogenaity of variance
+bartlett.test(means$Value ~ means$Parameter)
+TukeyHSD(geomod, "Parameter")
+shapiro.test(ENUres) # this P < .5 residual error may not follow normal distribution
+bartlett.test(ENU_avg$Rep_avg ~ ENU_avg$parameter) # also <.5
+TukeyHSD(ENUmod, "parameter")
+TukeyHSD(avgENUmod, "parameter")
+wilcox.test(ENU_avg$Rep_avg ~ ENU_avg$parameter)
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+#load master and reformate date and time
+master<-read.csv("Master_datasheet.csv")
+setwd("~/Dropbox/WRP_Ecoli/Data")
+#load master and reformate date and time
+master<-read.csv("Master_datasheet.csv")
+master<- master %>% mutate(date = as.POSIXct(date, format = "%m/%d/%y", tz = "UTC"))
+#Create new column with avg of replicates
+ENU<- master %>%
+filter(parameter == "Ec1603" | parameter == "EcIDEXX") %>%
+group_by(parameter,date, site) %>% mutate(Rep_avg = mean(value))
+#New df without substrate and one value per Enumeration test
+ENU_avg<- ENU %>% select(date, site, parameter, replicate, Rep_avg) %>%
+filter(replicate == 1) %>%
+arrange(site, date)
+#filtering and spreading data for plot
+ENU_avgWD<- ENU_avg %>% spread(key = "parameter",value= "Rep_avg")%>%
+filter(site != "LR-BlankDI", site != "LR-FB")
+# scatter plot of enumeration with reps averaged
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+# create a lm to predict IDEXX based on 1603
+lmENU<- lm(EcIDEXX ~ Ec1603, data= ENU_avgWD)
+summary(lmENU) #high residual error
+log_lmENU<- lm((log1p(EcIDEXX) ~ log1p(Ec1603)), data= ENU_avgWD)
+summary(log_lmENU)
+# scatter plot of enumeration with reps averaged
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+scale_x_log10()+ scale_y_log10()+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= Site, linetype= "EcIDEXX")) +
+labs(title = "Enumeration Averages \nE. coli Enumeration Laramie River",
+y="MPN or CFU/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = Site)) +
+geom_line(aes(y= EcIDEXX, color= site, linetype= "EcIDEXX")) +
+labs(title = "Enumeration Averages \nE. coli Enumeration Laramie River",
+y="MPN or CFU/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = site)) +
+geom_line(aes(y= EcIDEXX, color= site, linetype= "EcIDEXX")) +
+labs(title = "Enumeration Averages \nE. coli Enumeration Laramie River",
+y="MPN or CFU/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = site)) +
+labs(title = "Enumeration Averages \nE. coli Enumeration Laramie River",
+y="MPN or CFU/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = site)) +
+labs(title = "1603 Enumeration Averages \nLaramie River",
+y="MPN or CFU/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= Ec1603, linetype= "Ec1603"))+geom_line(aes( color = site)) +
+labs(title = "1603 Enumeration Averages",
+y="MPN or CFU/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+geom_line(aes( color = site)) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "dashed"))+
+geom_line(aes( color = site)) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+geom_line(aes( color = site, linetype= "dashed")) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)
+ggplot(ENU_avgWD, aes(x=EcIDEXX , y= Ec1603))+geom_point(aes(color= site))+
+theme_minimal(base_size = 19)+
+labs(title = "E. coli Enumeration methods \nLaramie River Summer 2020",
+y= "EPA 1603 (CFU/100ml)", x= "IDEXX (MPN/100ml)")
+#IDEXX
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+geom_line(aes( color = site, linetype= "dash")) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)
+#IDEXX
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "dashed"))+
+geom_line(aes( color = site)) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)
+#IDEXX
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+geom_line(aes( color = site)) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)+
+scale_linetype_manual(values = "dashed")
+#IDEXX
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+geom_line(aes( color = site)) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)+
+scale_linetype_manual(values = "dotted")
+#IDEXX
+ggplot(ENU_avgWD, aes(x= date, y= EcIDEXX, linetype= "EcIDEXX"))+
+geom_line(aes( color = site)) +
+labs(title = "IDEXX Enumeration Averages",
+y="MPN/100ml") +
+theme_minimal(base_size = 19)+
+scale_linetype_manual(values = "dashed")
+save.image("~/Dropbox/Thesis research/Laramie River/2020 Summer/LR_GeoMeans/ENV_10_21.RData")

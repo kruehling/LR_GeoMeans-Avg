@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1603474063639.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1150514559",
+    "id" : "D22C323D",
+    "lastKnownWriteTime" : 1603488755,
+    "last_content_update" : 1603488755516,
+    "path" : "~/Dropbox/Thesis research/Laramie River/2020 Summer/LR_GeoMeans&Avg/GeoMean_Avg_Graphics.R",
+    "project_path" : "GeoMean_Avg_Graphics.R",
+    "properties" : {
+        "cursorPosition" : "60,0",
+        "scrollLine" : "49",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1603476119856.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3805336567",
+    "id" : "AC5A195",
+    "lastKnownWriteTime" : 1603482296,
+    "last_content_update" : 1603482296103,
+    "path" : "~/Dropbox/Thesis research/Laramie River/2020 Summer/LR_GeoMeans&Avg/MasterManipulations.R",
+    "project_path" : "MasterManipulations.R",
+    "properties" : {
+        "cursorPosition" : "106,0",
+        "scrollLine" : "89"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
